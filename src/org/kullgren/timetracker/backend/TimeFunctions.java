@@ -3,16 +3,19 @@ package org.kullgren.timetracker.backend;
 import java.util.Calendar;
 
 public class TimeFunctions {
-	Calendar startTime;
+	Calendar startTime = null;
 	
 	public Calendar startTimer() {
-		startTime = Calendar.getInstance();
+		if (startTime == null) {
+			startTime = Calendar.getInstance();
+		}
 		return startTime;
 	}
 
 	public int stopTimer() {
 		Calendar endTime = Calendar.getInstance();
 		int elapsedTime = endTime.compareTo(startTime);
+		startTime = null;
 		return elapsedTime;
 	}
 

@@ -21,10 +21,6 @@ public class TimeFunctionsTest {
 		func = new TimeFunctions();
 	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
-
 	@Test
 	public void test_start_new_timer_returns_current_time() {
 		final Calendar startTime = Calendar.getInstance();
@@ -36,6 +32,20 @@ public class TimeFunctionsTest {
 		};
 				
 		assertEquals(startTime, func.startTimer());
+	}
+
+	@Test
+	public void test_trying_to_start_running_timer_returns_original_start_time() {
+		final Calendar startTime = Calendar.getInstance();
+		
+		new Expectations(Calendar.class) {
+			{
+				Calendar.getInstance(); result = startTime;
+			}
+		};
+		
+		Calendar firstStartTime = func.startTimer();
+		assertEquals(firstStartTime, func.startTimer());		
 	}
 	
 	@Test
@@ -94,6 +104,7 @@ public class TimeFunctionsTest {
 		func.startTimer();
 		assertEquals(45, func.pauseTimer());		
 	}
+	
 	
 }
 
