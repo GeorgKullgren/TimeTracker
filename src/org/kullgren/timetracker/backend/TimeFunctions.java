@@ -5,14 +5,20 @@ import java.util.Calendar;
 public class TimeFunctions {
 	Calendar startTime;
 	
-	public boolean startTimer() {
+	public Calendar startTimer() {
 		startTime = Calendar.getInstance();
-		return true;
+		return startTime;
 	}
 
 	public int stopTimer() {
 		Calendar endTime = Calendar.getInstance();
 		int elapsedTime = endTime.compareTo(startTime);
+		return elapsedTime;
+	}
+
+	public int pauseTimer() {
+		Calendar pauseTime = Calendar.getInstance();
+		int elapsedTime = pauseTime.compareTo(startTime);
 		return elapsedTime;
 	}
 }
