@@ -13,12 +13,12 @@ import org.junit.Test;
 
 import sun.util.resources.CalendarData;
 
-public class TimeFunctionsTest {
-	TimeFunctions func;
-		
+public class SimpleTimeFunctionsTest {
+	SimpleTimer func;
+
 	@Before
 	public void setUp() throws Exception {
-		func = new TimeFunctions();
+		func = new SimpleTimer();
 	}
 
 	@Test
@@ -46,6 +46,31 @@ public class TimeFunctionsTest {
 		
 		Calendar firstStartTime = func.startTimer();
 		assertEquals(firstStartTime, func.startTimer());		
+	}
+
+	@Test
+	public void test_stop_idle_timer_returns_0() {
+		assertEquals(0, func.stopTimer());
+	}
+	
+	@Test
+	public void test_stop_stopped_timer_returns_0() {
+		final Calendar startTime = Calendar.getInstance();
+		final Calendar endTime = Calendar.getInstance();
+		
+		new Expectations() {
+			Calendar mockCalendar;
+			
+			{
+				Calendar.getInstance(); result = startTime;
+				Calendar.getInstance(); result = endTime;
+				mockCalendar.compareTo(startTime); result = 55;
+			}
+		};
+		
+		func.startTimer();
+		assertEquals(55, func.stopTimer());
+		assertEquals(0, func.stopTimer());
 	}
 	
 	@Test
@@ -105,7 +130,58 @@ public class TimeFunctionsTest {
 		assertEquals(45, func.pauseTimer());		
 	}
 	
-	
+	@Test
+	public void test_pause_restart_stop_timer_returns_total() {
+		final Calendar startTime = Calendar.getInstance();
+		final Calendar pauseTime = Calendar.getInstance();
+		final Calendar restartTime = Calendar.getInstance();
+		final Calendar stopTime = Calendar.getInstance();
+		
+		new Expectations() {
+			Calendar mockCalendar;
+			{
+				Calendar.getInstance(); result = startTime;
+				Calendar.getInstance(); result = pauseTime;
+				mockCalendar.compareTo(startTime); result = 17;
+				Calendar.getInstance(); result = restartTime;
+				Calendar.getInstance(); result = stopTime;
+				mockCalendar.compareTo(restartTime); result = 23;
+			}
+		};
+		
+		func.startTimer();
+		assertEquals(17, func.pauseTimer());
+		func.startTimer();
+		assertEquals(40, func.stopTimer());
+	}
+
+	@Test
+	public void test_stop_timer_start_timer_resets_counted_time() {
+		final Calendar firstStartTime = Calendar.getInstance();
+		final Calendar secondStartTime = Calendar.getInstance();
+		final Calendar stopTime = Calendar.getInstance();
+		
+		new Expectations() {
+			Calendar mockCalendar;
+			{
+				Calendar.getInstance(); result = firstStartTime;
+				Calendar.getInstance(); result = stopTime;
+				mockCalendar.compareTo(firstStartTime); result = 17;
+				Calendar.getInstance(); result = secondStartTime;
+				Calendar.getInstance(); result = stopTime;
+				mockCalendar.compareTo(secondStartTime); result = 23;
+			}
+		};
+		
+		func.startTimer();
+		assertEquals(17, func.stopTimer());
+		func.startTimer();
+		assertEquals(23, func.stopTimer());
+		
+	}
+
 }
+
+
 
 

@@ -2,8 +2,9 @@ package org.kullgren.timetracker.backend;
 
 import java.util.Calendar;
 
-public class TimeFunctions {
+public class SimpleTimer {
 	Calendar startTime = null;
+	int elapsedTime = 0;
 	
 	public Calendar startTimer() {
 		if (startTime == null) {
@@ -13,15 +14,18 @@ public class TimeFunctions {
 	}
 
 	public int stopTimer() {
-		Calendar endTime = Calendar.getInstance();
-		int elapsedTime = endTime.compareTo(startTime);
-		startTime = null;
-		return elapsedTime;
+		int totalTime = 0;
+		if (startTime != null) {
+			totalTime = pauseTimer();
+			elapsedTime = 0;
+		}
+		return totalTime;
 	}
 
 	public int pauseTimer() {
 		Calendar pauseTime = Calendar.getInstance();
-		int elapsedTime = pauseTime.compareTo(startTime);
+		elapsedTime += pauseTime.compareTo(startTime);
+		startTime = null;
 		return elapsedTime;
 	}
 }
