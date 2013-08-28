@@ -23,9 +23,14 @@ public class SimpleTimer {
 	}
 
 	public int pauseTimer() {
-		Calendar pauseTime = Calendar.getInstance();
-		elapsedTime += pauseTime.compareTo(startTime);
-		startTime = null;
-		return elapsedTime;
+		if (startTime != null) {
+			Calendar pauseTime = Calendar.getInstance();
+			elapsedTime += pauseTime.compareTo(startTime);
+			startTime = null;
+			return elapsedTime;
+		}
+		else {
+			return 0;
+		}
 	}
 }

@@ -176,8 +176,12 @@ public class SimpleTimeFunctionsTest {
 		func.startTimer();
 		assertEquals(17, func.stopTimer());
 		func.startTimer();
-		assertEquals(23, func.stopTimer());
-		
+		assertEquals(23, func.stopTimer());	
+	}
+	
+	@Test
+	public void test_pause_not_started_timer_returns_0() {
+		assertEquals(0, func.pauseTimer());
 	}
 
 }

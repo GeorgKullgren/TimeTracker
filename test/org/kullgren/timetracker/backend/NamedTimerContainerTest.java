@@ -57,4 +57,28 @@ public class NamedTimerContainerTest {
 		assertEquals(true, func.createTimer("FirstTimer"));
 		assertEquals(false, func.createTimer("FirstTimer"));		
 	}
+	
+	@Test
+	public void test_pause_named_timer() {
+		final Calendar startTime = Calendar.getInstance();
+		final Calendar pauseTime = Calendar.getInstance();
+		
+		new Expectations(Calendar.class) {
+			Calendar mockCalendar;
+			{
+				Calendar.getInstance(); result = startTime;
+				Calendar.getInstance(); result = pauseTime;
+				mockCalendar.compareTo(startTime); result = 43;
+			}
+		};
+		
+		func.createTimer("FirstTimer");
+		func.startTimer("FirstTimer");
+		assertEquals(43, func.pauseTimer("FirstTimer"));
+	}
+	
+	@Test
+	public void test_pause_not_existing_timer() {
+		assertEquals(0, func.pauseTimer("FirstTimer"));
+	}
 }

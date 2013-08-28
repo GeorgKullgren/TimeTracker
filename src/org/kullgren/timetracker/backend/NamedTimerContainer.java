@@ -31,4 +31,14 @@ public class NamedTimerContainer {
 			return null;
 	}
 
+	public int pauseTimer(String timerName) {
+		SimpleTimer timer = bagOfTimers.get(timerName);
+		if (timer != null) {
+			return timer.pauseTimer();
+		}
+		else {
+			return 0;
+		}
+	}
+
 }
