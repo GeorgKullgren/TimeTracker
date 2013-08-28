@@ -4,17 +4,19 @@ import static org.junit.Assert.*;
 
 import java.util.Calendar;
 
-import mockit.Expectations;
+import mockit.*;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+@UsingMocksAndStubs({SimpleTimerMock.class})
 public class NamedTimerContainerTest {
 	NamedTimerContainer func;
 
 	@Before
 	public void setUp() throws Exception {
+		new SimpleTimerMock();
 		func = new NamedTimerContainer();
 	}
 
@@ -29,16 +31,8 @@ public class NamedTimerContainerTest {
 
 	@Test
 	public void test_start_named_timer() {
-		final Calendar startTime = Calendar.getInstance();
-		
-		new Expectations(Calendar.class) {
-			{
-				Calendar.getInstance(); result = startTime;
-			}
-		};
-		
 		func.createTimer("FirstTimer");
-		assertEquals(startTime, func.startTimer("FirstTimer"));
+		assertNotEquals(null, func.startTimer("FirstTimer"));
 	}
 	
 	@Test
@@ -59,22 +53,10 @@ public class NamedTimerContainerTest {
 	}
 	
 	@Test
-	public void test_pause_named_timer() {
-		final Calendar startTime = Calendar.getInstance();
-		final Calendar pauseTime = Calendar.getInstance();
-		
-		new Expectations(Calendar.class) {
-			Calendar mockCalendar;
-			{
-				Calendar.getInstance(); result = startTime;
-				Calendar.getInstance(); result = pauseTime;
-				mockCalendar.compareTo(startTime); result = 43;
-			}
-		};
-		
+	public void test_pause_named_timer() {		
 		func.createTimer("FirstTimer");
 		func.startTimer("FirstTimer");
-		assertEquals(43, func.pauseTimer("FirstTimer"));
+		assertEquals(55, func.pauseTimer("FirstTimer"));
 	}
 	
 	@Test
