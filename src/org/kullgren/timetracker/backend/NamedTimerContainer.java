@@ -4,15 +4,19 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NamedTimerContainer {
+public class NamedTimerContainer 
+{
 	private Map<String, SimpleTimer> bagOfTimers;
 	
-	public NamedTimerContainer() {
+	public NamedTimerContainer() 
+	{
 		bagOfTimers = new HashMap<String, SimpleTimer>();
 	}
 	
-	public boolean createTimer(String timerName) {
-		if (bagOfTimers.get(timerName) == null) {
+	public boolean createTimer(String timerName) 
+	{
+		if (bagOfTimers.get(timerName) == null) 
+		{
 			bagOfTimers.put(timerName, new SimpleTimer());
 			return true;
 		}
@@ -22,23 +26,56 @@ public class NamedTimerContainer {
 		}
 	}
 
-	public Calendar startTimer(String timerName) {
+	public Calendar startTimer(String timerName) 
+	{
 		SimpleTimer timer = bagOfTimers.get(timerName);
-		if (timer != null) {
+		if (timer != null) 
+		{
 			return timer.startTimer();
 		}
 		else
+		{
 			return null;
+		}
 	}
 
-	public int pauseTimer(String timerName) {
+	public int pauseTimer(String timerName) 
+	{
 		SimpleTimer timer = bagOfTimers.get(timerName);
-		if (timer != null) {
+		if (timer != null) 
+		{
 			return timer.pauseTimer();
 		}
-		else {
+		else 
+		{
 			return 0;
 		}
 	}
 
+	public int stopTimer(String timerName) 
+	{
+		SimpleTimer timer = bagOfTimers.get(timerName);
+		if (timer != null) 
+		{
+			return timer.stopTimer();
+		}
+		else 
+		{
+			return 0;
+		}
+	}
+
+	public boolean deleteTimer(String timerName) 
+	{
+		SimpleTimer timer = bagOfTimers.get(timerName);
+		if (timer != null) 
+		{
+			bagOfTimers.remove(timerName);
+			return true;
+		}
+		else 
+		{
+			return false;
+		}
+	}
 }
