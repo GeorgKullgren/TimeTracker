@@ -13,19 +13,23 @@ import org.junit.Test;
 
 import sun.util.resources.CalendarData;
 
-public class SimpleTimeFunctionsTest {
+public class SimpleTimeFunctionsTest 
+{
 	SimpleTimer func;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception 
+	{
 		func = new SimpleTimer();
 	}
 
 	@Test
-	public void test_start_new_timer_returns_current_time() {
+	public void test_start_new_timer_returns_current_time() 
+	{
 		final Calendar startTime = Calendar.getInstance();
 		
-		new Expectations(Calendar.class) {
+		new Expectations(Calendar.class) 
+		{
 			{
 				Calendar.getInstance(); result = startTime;
 			}
@@ -35,10 +39,12 @@ public class SimpleTimeFunctionsTest {
 	}
 
 	@Test
-	public void test_trying_to_start_running_timer_returns_original_start_time() {
+	public void test_trying_to_start_running_timer_returns_original_start_time() 
+	{
 		final Calendar startTime = Calendar.getInstance();
 		
-		new Expectations(Calendar.class) {
+		new Expectations(Calendar.class) 
+		{
 			{
 				Calendar.getInstance(); result = startTime;
 			}
@@ -49,16 +55,19 @@ public class SimpleTimeFunctionsTest {
 	}
 
 	@Test
-	public void test_stop_idle_timer_returns_0() {
+	public void test_stop_idle_timer_returns_0() 
+	{
 		assertEquals(0, func.stopTimer());
 	}
 	
 	@Test
-	public void test_stop_stopped_timer_returns_0() {
+	public void test_stop_stopped_timer_returns_0() 
+	{
 		final Calendar startTime = Calendar.getInstance();
 		final Calendar endTime = Calendar.getInstance();
 		
-		new Expectations() {
+		new Expectations() 
+		{
 			Calendar mockCalendar;
 			
 			{
@@ -74,13 +83,14 @@ public class SimpleTimeFunctionsTest {
 	}
 	
 	@Test
-	public void test_stop_running_timer_returns_55() {
+	public void test_stop_running_timer_returns_55() 
+	{
 		final Calendar startTime = Calendar.getInstance();
 		final Calendar endTime = Calendar.getInstance();
 		
-		new Expectations() {
+		new Expectations() 
+		{
 			Calendar mockCalendar;
-			
 			{
 				Calendar.getInstance(); result = startTime;
 				Calendar.getInstance(); result = endTime;
@@ -93,13 +103,14 @@ public class SimpleTimeFunctionsTest {
 	}
 	
 	@Test
-	public void test_stop_running_timer_returns_5040() {
+	public void test_stop_running_timer_returns_5040() 
+	{
 		final Calendar startTime = Calendar.getInstance();
 		final Calendar endTime = Calendar.getInstance();
 		
-		new Expectations() {
+		new Expectations() 
+		{
 			Calendar mockCalendar;
-			
 			{
 				Calendar.getInstance(); result = startTime;
 				Calendar.getInstance(); result = endTime;
@@ -112,13 +123,14 @@ public class SimpleTimeFunctionsTest {
 	}
 	
 	@Test
-	public void test_pause_timer_returns_elapsed_time_45() {
+	public void test_pause_timer_returns_elapsed_time_45() 
+	{
 		final Calendar startTime = Calendar.getInstance();
 		final Calendar pauseTime = Calendar.getInstance();
 		
-		new Expectations() {
+		new Expectations() 
+		{
 			Calendar mockCalendar;
-			
 			{
 				Calendar.getInstance(); result = startTime;
 				Calendar.getInstance(); result = pauseTime;
@@ -131,13 +143,15 @@ public class SimpleTimeFunctionsTest {
 	}
 	
 	@Test
-	public void test_pause_restart_stop_timer_returns_total() {
+	public void test_pause_restart_stop_timer_returns_total() 
+	{
 		final Calendar startTime = Calendar.getInstance();
 		final Calendar pauseTime = Calendar.getInstance();
 		final Calendar restartTime = Calendar.getInstance();
 		final Calendar stopTime = Calendar.getInstance();
 		
-		new Expectations() {
+		new Expectations() 
+		{
 			Calendar mockCalendar;
 			{
 				Calendar.getInstance(); result = startTime;
@@ -156,12 +170,14 @@ public class SimpleTimeFunctionsTest {
 	}
 
 	@Test
-	public void test_stop_timer_start_timer_resets_counted_time() {
+	public void test_stop_timer_start_timer_resets_counted_time() 
+	{
 		final Calendar firstStartTime = Calendar.getInstance();
 		final Calendar secondStartTime = Calendar.getInstance();
 		final Calendar stopTime = Calendar.getInstance();
 		
-		new Expectations() {
+		new Expectations() 
+		{
 			Calendar mockCalendar;
 			{
 				Calendar.getInstance(); result = firstStartTime;
@@ -180,7 +196,8 @@ public class SimpleTimeFunctionsTest {
 	}
 	
 	@Test
-	public void test_pause_not_started_timer_returns_0() {
+	public void test_pause_not_started_timer_returns_0() 
+	{
 		assertEquals(0, func.pauseTimer());
 	}
 
